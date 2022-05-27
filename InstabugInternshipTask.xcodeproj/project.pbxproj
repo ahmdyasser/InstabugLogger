@@ -10,10 +10,10 @@
 		96068079283CFBD5003238A1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96068077283CFBD5003238A1 /* CoreDataManager.swift */; };
 		96153090283E070300CA9B81 /* LoggerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615308E283E070300CA9B81 /* LoggerModel.swift */; };
 		964B5E6B2840E98100236F31 /* InstabugLogger+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964B5E6A2840E98100236F31 /* InstabugLogger+Extensions.swift */; };
-		9662D0FA283E4917002AB092 /* InstabugLoggerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 961D66F1283E37D600D2F3B1 /* InstabugLoggerModel.xcdatamodeld */; };
 		96CD4788283E4A56001D81B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E3E98262D7C10007D38E8 /* AppDelegate.swift */; };
 		96E935602841012600615A45 /* InstabugLoggerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 961D66F1283E37D600D2F3B1 /* InstabugLoggerModel.xcdatamodeld */; };
 		96E9356228410C0400615A45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E9356128410C0400615A45 /* Constants.swift */; };
+		96E93563284127F700615A45 /* InstabugLoggerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 961D66F1283E37D600D2F3B1 /* InstabugLoggerModel.xcdatamodeld */; };
 		B47E3E9B262D7C10007D38E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E3E9A262D7C10007D38E8 /* SceneDelegate.swift */; };
 		B47E3E9D262D7C10007D38E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E3E9C262D7C10007D38E8 /* ViewController.swift */; };
 		B47E3EA0262D7C10007D38E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B47E3E9E262D7C10007D38E8 /* Main.storyboard */; };
@@ -377,13 +377,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E93563284127F700615A45 /* InstabugLoggerModel.xcdatamodeld in Sources */,
 				964B5E6B2840E98100236F31 /* InstabugLogger+Extensions.swift in Sources */,
 				96068079283CFBD5003238A1 /* CoreDataManager.swift in Sources */,
 				96153090283E070300CA9B81 /* LoggerModel.swift in Sources */,
 				B47E3EF3262D7C7C007D38E8 /* InstabugLogger.swift in Sources */,
 				96E9356228410C0400615A45 /* Constants.swift in Sources */,
 				96CD4788283E4A56001D81B2 /* AppDelegate.swift in Sources */,
-				9662D0FA283E4917002AB092 /* InstabugLoggerModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

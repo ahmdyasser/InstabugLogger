@@ -27,17 +27,17 @@ class CoreDataManager {
     
     
     lazy var backgroundContext: NSManagedObjectContext = {
-       let context = persistentContainer.newBackgroundContext()
-       context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-       return context
-     }()
-
+        let context = persistentContainer.newBackgroundContext()
+        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        return context
+    }()
     
-     lazy var mainContext: NSManagedObjectContext = {
-       let context = persistentContainer.viewContext
-       context.automaticallyMergesChangesFromParent = true
-       return context
-     }()
+    
+    lazy var mainContext: NSManagedObjectContext = {
+        let context = persistentContainer.viewContext
+        context.automaticallyMergesChangesFromParent = true
+        return context
+    }()
     
     // MARK: - Core Data Saving support
     
@@ -64,8 +64,8 @@ extension CoreDataManager {
     ///     - index:  The index at which you delete data.
     ///     - deletedData:  The data before deleting.
     func deleteLogAt(index: Int, deletedData: [LoggerEntity]) {
-            mainContext.delete(deletedData[index])
-            self.saveContext()
+        mainContext.delete(deletedData[index])
+        self.saveContext()
         
     }
     
@@ -127,5 +127,19 @@ extension CoreDataManager {
         }
         
         
+    }
+    func fetchLogs() -> [LoggerEntity] {
+        var logs: [LoggerEntity] = []
+        let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
+
+        mainContext.performAndWait {
+            do {
+                logs = try mainContext.fetch(fetchRequest)
+            } catch {
+                fatalError("Can't fetch logs \(error)")
+            }
+        }
+        
+        return logs
     }
 }
