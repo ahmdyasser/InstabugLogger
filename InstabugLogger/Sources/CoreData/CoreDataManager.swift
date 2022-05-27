@@ -53,10 +53,10 @@ extension CoreDataManager {
     ///     - deletedData:  The data before deleting.
     func deleteLogAt(index: Int, deletedData: [LoggerEntity]) {
         
-        let context = persistentContainer.viewContext
-        context.delete(deletedData[index])
-        
-        saveContext()
+        let _ = persistentContainer.performBackgroundTask { context in
+            context.delete(deletedData[index])
+            self.saveContext()
+        }
         
     }
     
@@ -86,41 +86,40 @@ extension CoreDataManager {
     /// - Parameters:
     ///     - logger:  A logger instance
     func saveLog(logger: LoggerModel) {
+        let context = persistentContainer.viewContext
         
-        persistentContainer.performBackgroundTask { context in
-            let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
-            let oldLogs = try! context.fetch(fetchRequest)
-            let newLogs = LoggerEntity(context: context)
-            
-            newLogs.message = logger.message
-            newLogs.level = logger.level
-            
-            if oldLogs.count >= 1000 {
-                self.deleteLogAt(index: 0, deletedData: oldLogs)
-            }
-            context.insert(newLogs)
-            do {
-                try context.save()
-            } catch {
-                fatalError("Can't save logs \(error)")
-            }
+        let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
+        let oldLogs = try! context.fetch(fetchRequest)
+        let newLogs = LoggerEntity(context: context)
+        
+        newLogs.message = logger.message
+        newLogs.level = logger.level
+        
+        if oldLogs.count >= 1000 {
+            self.deleteLogAt(index: 0, deletedData: oldLogs)
         }
+        context.insert(newLogs)
+        do {
+            try context.save()
+        } catch {
+            fatalError("Can't save logs \(error)")
+        }
+        
         
         
         
     }
     func fetchLogs(forEntityName entity: String, completion: @escaping ([LoggerEntity]) -> Void) {
-        
-        let _ = persistentContainer.performBackgroundTask { context in
-            var logs: [LoggerEntity] = []
-            let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
-            do {
-                logs = try context.fetch(fetchRequest)
-                completion(logs)
-            } catch {
-                fatalError("Can't fetch logs \(error)")
-            }
+        let context = persistentContainer.viewContext
+        var logs: [LoggerEntity] = []
+        let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
+        do {
+            logs = try context.fetch(fetchRequest)
+            completion(logs)
+        } catch {
+            fatalError("Can't fetch logs \(error)")
         }
-   
+        
+        
     }
 }

@@ -17,7 +17,7 @@ extension InstabugLogger {
         var message = message
         
         if message.count > 1000 {
-            message = "\(message.prefix(1000)) ..."
+            message = "\(message.prefix(1000))..."
         }
         
         return message

@@ -38,16 +38,17 @@ public class InstabugLogger {
     /// - Parameters:
     ///    - CompletionHandler: The block to execute after the fetching finishes. This block has no return value and takes no parameters.
     ///
-    public func fetchAllLogs(completionHandler: ([LoggerEntity]) -> Void) {
+    public func fetchAllLogs(completionHandler: @escaping ([LoggerEntity]) -> Void) {
         var logs: [LoggerEntity] = []
         CoreDataManager.shared.fetchLogs(forEntityName: entityName) { logArray in
             logs = logArray
+            completionHandler(logs)
         }
-        
-        completionHandler(logs)
     }
     
-  
+    public func clearLogs() {
+        CoreDataManager.shared.clearLog(for: "LoggerEntity")
+    }
 
 }
 
