@@ -10,6 +10,8 @@ import Foundation
 public class InstabugLogger {
     public static var shared = InstabugLogger()
     private var entityName = "LoggerEntity"
+    
+    
     // MARK: Logging
     
     /// Saves  logs  to Core Data
@@ -28,9 +30,7 @@ public class InstabugLogger {
     /// Fetches all the logs  from the Core Data store and returns value of type Any.
     public func fetchAllLogs() -> [LoggerEntity] {
         var logs: [LoggerEntity] = []
-        CoreDataManager.shared.fetchLogs(forEntityName: entityName) { logArray in
-            logs = logArray
-        }
+        logs = CoreDataManager.shared.fetchLogs()
         return logs
     }
     
@@ -38,12 +38,10 @@ public class InstabugLogger {
     /// - Parameters:
     ///    - CompletionHandler: The block to execute after the fetching finishes. This block has no return value and takes no parameters.
     ///
-    public func fetchAllLogs(completionHandler: @escaping ([LoggerEntity]) -> Void) {
+    public func fetchAllLogs(completionHandler: ([LoggerEntity]) -> Void) {
         var logs: [LoggerEntity] = []
-        CoreDataManager.shared.fetchLogs(forEntityName: entityName) { logArray in
-            logs = logArray
-            completionHandler(logs)
-        }
+        logs = CoreDataManager.shared.fetchLogs()
+        completionHandler(logs)
     }
     
     public func clearLogs() {
