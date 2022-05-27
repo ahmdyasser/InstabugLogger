@@ -148,6 +148,7 @@
 			children = (
 				9615308E283E070300CA9B81 /* LoggerModel.swift */,
 				B47E3EF2262D7C7C007D38E8 /* InstabugLogger.swift */,
+				964B5E672840E91300236F31 /* Extensions */,
 				964B5E662840C8F900236F31 /* CoreData */,
 			);
 			path = Sources;
@@ -206,7 +207,6 @@
 		B47E3ED3262D7C66007D38E8 /* InstabugLogger */ = {
 			isa = PBXGroup;
 			children = (
-				964B5E672840E91300236F31 /* Extensions */,
 				964B5E652840C7CC00236F31 /* Sources */,
 				B47E3ED4262D7C66007D38E8 /* InstabugLogger.h */,
 				B47E3ED5262D7C66007D38E8 /* Info.plist */,
