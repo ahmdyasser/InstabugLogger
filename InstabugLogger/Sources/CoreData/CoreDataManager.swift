@@ -63,10 +63,14 @@ extension CoreDataManager {
     /// - Parameters:
     ///     - index:  The index at which you delete data.
     ///     - deletedData:  The data before deleting.
-    func deleteLogAt(index: Int, deletedData: [LoggerEntity]) {
-        mainContext.delete(deletedData[index])
-        self.saveContext()
-        
+    func deleteLogAt(index: Int, logArray: [LoggerEntity]) {
+        let objectID = logArray[index].objectID
+        backgroundContext.performAndWait {
+            if let managedObject = try? backgroundContext.existingObject(with: objectID) {
+                backgroundContext.delete(managedObject)
+                try? backgroundContext.save()
+            }
+        }
     }
     
     
@@ -74,19 +78,13 @@ extension CoreDataManager {
     /// - Parameters:
     ///     - entity:  The entity name which you want to clear from
     func clearLog(for entity: String) {
-        let request = NSFetchRequest<LoggerEntity>(entityName: entityName)
-        request.returnsObjectsAsFaults = false
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         
-        do {
-            let results = try mainContext.fetch(request)
-            for managedObject in results {
-                mainContext.delete(managedObject)
-            }
-        } catch let error as NSError {
-            print("Delete all data in \(entity) error : \(error) \(error.userInfo)")
+        backgroundContext.performAndWait {
+            _ = try? backgroundContext.execute(deleteRequest)
+            try? backgroundContext.save()
         }
-        
-        saveContext()
     }
     
     
@@ -101,9 +99,9 @@ extension CoreDataManager {
         
         newLogs.message = logger.message
         newLogs.level = logger.level
-        
-        if oldLogs.count >= 1000 {
-            self.deleteLogAt(index: 0, deletedData: oldLogs)
+        mainContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        if oldLogs.count >= 100 {
+            self.deleteLogAt(index: 0, logArray: oldLogs)
         }
         mainContext.insert(newLogs)
         do {
@@ -116,18 +114,8 @@ extension CoreDataManager {
         
         
     }
-    func fetchLogs(forEntityName entity: String, completion: @escaping ([LoggerEntity]) -> Void) {
-        var logs: [LoggerEntity] = []
-        let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)
-        do {
-            logs = try mainContext.fetch(fetchRequest)
-            completion(logs)
-        } catch {
-            fatalError("Can't fetch logs \(error)")
-        }
-        
-        
-    }
+    /// Fetches all the saved logs in Core Data
+    /// - Returns  array of all saved logs
     func fetchLogs() -> [LoggerEntity] {
         var logs: [LoggerEntity] = []
         let fetchRequest = NSFetchRequest<LoggerEntity>(entityName: self.entityName)

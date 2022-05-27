@@ -20,8 +20,7 @@ While working on this project, to achieve some level of high quality and maintai
 
 ### Concurrency
 
-1. Save and load any log is on a concurrent queue to ensure smooth running of the app and avoid freezing UI.
-2. Create asynchronous tests to test async methods and avoid unexpected test results.
+1. Save, delete and load any log is on a concurrent queue to ensure smooth running of the app and avoid freezing UI.
 
 
 

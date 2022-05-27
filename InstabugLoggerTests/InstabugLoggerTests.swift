@@ -24,7 +24,21 @@ class InstabugLoggerTests: XCTestCase {
         sut = nil
     }
     
+    func test_LogsAreLessThan1000Log() throws {
+        // NOTE: here we are setting the test to be more than 100 not 1000 to shorten test time
+        // given
+        for i in 0..<103 {
+            sut.saveLog("lvl", message: "msg")
+        }
+        // when
+        let logs = sut.fetchAllLogs()
     
+        
+        
+
+        // then
+        XCTAssertEqual(logs.count, 100)
+    }
     func test_LogMessageLessThan1000Chars() throws {
         
         // given
