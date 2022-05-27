@@ -25,7 +25,7 @@ class InstabugLoggerTests: XCTestCase {
     }
     
     
-    func test_ConfigureLogMessageLessThan1000Chars() throws {
+    func test_LogMessageLessThan1000Chars() throws {
         
         // given
         sut.saveLog("lvl", message: Constants.longMsg)

@@ -1,6 +1,7 @@
 # Instabug Internship Task
 This app purpose is to save log messages in persistence container to retrieve it at anytime and analyze it.
 
+<img width="300" alt="Screen Shot 2022-05-27 at 1 31 53 PM" src="https://user-images.githubusercontent.com/42544598/170691519-fd6ac020-b86e-4bc6-b551-aa92aaf31e84.png">
 
 ## Goals
 While working on this project, to achieve some level of high quality and maintainability:
